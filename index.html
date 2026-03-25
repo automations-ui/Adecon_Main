@@ -5,207 +5,408 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ADECON 2026 – Registration</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
 <style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-body{
-margin:0;
-font-family:Arial, sans-serif;
-background:#f5f5f5;
-}
+  :root {
+    --navy:      #0b1847;
+    --navy-mid:  #1a2e6e;
+    --orange:    #e8621a;
+    --orange-lt: #f7813e;
+    --white:     #ffffff;
+    --muted:     rgba(255,255,255,0.55);
+    --border:    rgba(255,255,255,0.15);
+    --card-shadow: 0 8px 40px rgba(0,0,0,0.25);
+  }
 
-.full-width{
-width:100%;
-max-height:200px;
-object-fit:fill;
-display:block;
-}
+  /* ─── PAGE ─────────────────────────────────────────── */
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: linear-gradient(160deg, #ffffff 0%, #ffffff 45%, #ffffff 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    position: relative;
+  }
 
-.footer{
-width:100%;
-max-height:150px;
-object-fit:contain;
-display:block;
-margin:auto;
-}
+  /* subtle dot-grid texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 28px 28px;
+    pointer-events: none;
+    z-index: 0;
+  }
 
-.cards-wrapper{
-padding:40px 20px;
-text-align:center;
-}
+  /* ambient orange glow top-right */
+  body::after {
+    content: '';
+    position: fixed;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,98,26,0.12) 0%, transparent 65%);
+    top: -100px; right: -150px;
+    pointer-events: none;
+    z-index: 0;
+  }
 
-.cards{
-display:flex;
-justify-content:center;
-gap:20px;
-max-width:950px;
-margin:auto;
-}
+  /* ─── HEADER IMAGE ──────────────────────────────────── */
+  .header-img-wrap {
+    width: 100%;
+    position: relative;
+    z-index: 1;
+    line-height: 0;
+    padding-top: 8px;
+  }
 
-.card{
-background:#fff;
-border:1px solid #ddd;
-border-radius:10px;
-padding:28px 22px;
-width:210px;
-box-shadow:0 2px 8px rgba(0,0,0,0.08);
+  .full-width {
+    width: 100%;
+    max-height: 200px;
+    object-fit: contain;
+    display: block;
+    margin: auto;
+  }
 
-display:flex;
-flex-direction:column;
-align-items:center;
-}
+  /* ─── MAIN WRAPPER ──────────────────────────────────── */
+  .cards-wrapper {
+    flex: 1;
+    padding: 32px 24px 56px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
 
-.card h3{
-font-size:16px;
-color:#1a2e6e;
-margin:0 0 10px;
-min-height:40px;
-display:flex;
-align-items:center;
-justify-content:center;
-text-align:center;
-}
+  /* ─── HEADER TEXT ───────────────────────────────────── */
+  .header-text {
+    animation: fadeUp 0.7s ease both;
+  }
 
-.note{
-font-size:12px;
-color:#888;
-min-height:32px;
-margin-bottom:8px;
-display:flex;
-align-items:center;
-justify-content:center;
-text-align:center;
-}
+  .header-text .eyebrow {
+    display: inline-block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--orange-lt);
+    background: rgba(232,98,26,0.18);
+    border: 1px solid rgba(232,98,26,0.30);
+    padding: 4px 16px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+  }
 
-.price{
-font-size:26px;
-font-weight:bold;
-color:#e8621a;
-margin-bottom:18px;
-}
+  .header-text h1 {
+    font-size: 44px;
+    font-weight: 800;
+    color: #0b1847;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
 
-.card a{
-margin-top:auto;
-display:inline-block;
-padding:10px 28px;
-background:#1a2e6e;
-color:#fff;
-border-radius:22px;
-text-decoration:none;
-font-size:14px;
-}
+  .header-text .meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #0b1847;
+    font-size: 15px;
+    font-weight: 500;
+  }
 
-.header-text h1{
-font-size:32px;
-font-weight:800;
-color:#1a237e;
-margin:0;
-}
+  .header-text .meta .dot {
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--orange);
+    display: inline-block;
+  }
 
-.header-text h2{
-font-size:18px;
-color:#333;
-margin:4px 0;
-}
+  /* ─── LOGIN BUTTON ──────────────────────────────────── */
+  .login-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 24px;
+    padding: 11px 32px;
+    background: var(--orange);
+    color: var(--white);
+    border-radius: 100px;
+    text-decoration: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    box-shadow: 0 4px 24px rgba(232,98,26,0.40);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    animation: fadeUp 0.7s 0.15s ease both;
+  }
 
-.header-text p{
-color:#555;
-margin:0;
-}
+  .login-btn::after {
+    content: '→';
+    font-size: 15px;
+    transition: transform 0.2s ease;
+  }
 
-@media (max-width: 768px) {
+  .login-btn:hover {
+    background: var(--orange-lt);
+    box-shadow: 0 6px 32px rgba(232,98,26,0.55);
+    transform: translateY(-2px);
+  }
+
+  .login-btn:hover::after { transform: translateX(3px); }
+
+  /* ─── DIVIDER ───────────────────────────────────────── */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    max-width: 480px;
+    margin: 38px auto 0;
+    animation: fadeUp 0.7s 0.25s ease both;
+  }
+
+  .divider::before,
+  .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .section-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #0b1847;
+    white-space: nowrap;
+  }
+
+  /* ─── CARDS ─────────────────────────────────────────── */
+  .cards {
+    display: flex;
+    justify-content: center;
+    gap: 22px;
+    max-width: 560px;
+    margin: 32px auto 0;
+    animation: fadeUp 0.7s 0.35s ease both;
+  }
+
+  .card {
+    background: rgba(255,255,255,0.97);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 20px;
+    padding: 32px 28px 28px;
+    flex: 1;
+    max-width: 240px;
+    box-shadow: var(--card-shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 56px rgba(0,0,0,0.35);
+  }
+
+  /* top accent bar */
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--navy), var(--orange));
+    border-radius: 20px 20px 0 0;
+  }
+
+  /* card tag */
+  .card-tag {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 10px;
+  }
+
+  /* card title */
+  .card h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 6px;
+    text-align: center;
+    line-height: 1.25;
+  }
+
+  /* price */
+  .price {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: #0b1847;
+    line-height: 1;
+    margin: 14px 0 4px;
+  }
+
+  .price-note {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #9ca3af;
+    margin-bottom: 24px;
+  }
+
+  /* register link */
+  .card a {
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 11px 30px;
+    background: var(--orange);
+    color: var(--white);
+    border-radius: 100px;
+    text-decoration: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    box-shadow: 0 4px 18px rgba(232,98,26,0.35);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  }
+
+  .card a::after { content: '→'; font-size: 14px; transition: transform 0.2s ease; }
+
+  .card a:hover {
+    background: var(--orange-lt);
+    box-shadow: 0 6px 26px rgba(232,98,26,0.50);
+    transform: translateY(-2px);
+  }
+
+  .card a:hover::after { transform: translateX(3px); }
+
+  /* ─── FOOTER IMAGE ──────────────────────────────────── */
+  .footer-img-wrap {
+    width: 100%;
+    position: relative;
+    z-index: 1;
+    line-height: 0;
+    padding-bottom: 8px;
+  }
+
+  .footer {
+    width: 100%;
+    max-height: 150px;
+    object-fit: contain;
+    display: block;
+    margin: auto;
+  }
+
+  /* ─── ANIMATIONS ────────────────────────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── MOBILE ────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    .header-text h1 { font-size: 30px; }
+    .section-title  { font-size: 20px; }
+    .full-width     { max-height: 160px; }
+    .footer         { max-height: 110px; }
     .cards {
-        flex-direction: column;
-        align-items: center;
-        gap: 15px;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
     }
     .card {
-        width: 90%;
-        max-width: 300px;
+      width: 90%;
+      max-width: 320px;
     }
-    .header-text h1 {
-        font-size: 24px;
-    }
-    .header-text h2 {
-        font-size: 16px;
-    }
-    .header-text p {
-        font-size: 14px;
-    }
-    .cards-wrapper {
-        padding: 20px 10px;
-    }
-    .full-width {
-        max-height: 180px;
-        object-fit: cover;
-    }
-    .footer {
-        max-height: 120px;
-        object-fit: contain;
-    }
-    h2 {
-        font-size: 20px;
-        margin: 20px 0;
-    }
-}
+    .cards-wrapper { padding: 20px 16px 36px; }
+  }
 
-@media (min-width: 769px) and (max-width: 1024px) {
-    .cards {
-        gap: 15px;
-    }
-    .card {
-        width: 180px;
-        padding: 20px 18px;
-    }
-    .header-text h1 {
-        font-size: 28px;
-    }
-    .header-text h2 {
-        font-size: 17px;
-    }
-}
-
+  /* ─── TABLET ─────────────────────────────────────────── */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .header-text h1 { font-size: 36px; }
+    .card { padding: 28px 22px 24px; }
+  }
 </style>
 </head>
 
 <body>
 
-<img class="full-width"
-src="https://s3.ap-south-1.amazonaws.com/cdn2.onference.in/testepisodethumbnail/ADECON+Registration+Banner+Header.png">
+<!-- HEADER IMAGE (transparent PNG on navy background) -->
+<div class="header-img-wrap">
+  <img class="full-width"
+       src="https://s3.ap-south-1.amazonaws.com/cdn2.onference.in/testepisodethumbnail/ADECON_Registration_Banner_Header-removebg-preview.png"
+       alt="ADECON 2026 Banner">
+</div>
 
+<!-- MAIN CONTENT -->
 <div class="cards-wrapper">
 
-<div class="header-text">
-<h1>ADECON 2026</h1>
-<h2>11th ADE Annual National Conference</h2>
-<p>28-29th March 2026 | Virtual</p>
+  <!-- HEADER TEXT -->
+  <div class="header-text">
+    <span class="eyebrow">11th ADE Annual National Conference</span>
+    <h1>ADECON 2026</h1>
+    <div class="meta">
+      <span>28–29 March 2026</span>
+      <span class="dot"></span>
+      <span>Virtual</span>
+    </div>
+  </div>
+
+  <!-- LOGIN BUTTON -->
+  <a href="https://adecon.onrender.com/" target="_blank" class="login-btn">
+    Login
+  </a>
+
+  <!-- SECTION TITLE / DIVIDER -->
+  <div class="divider">
+    <span class="section-title">Register Now</span>
+  </div>
+
+  <!-- CARDS -->
+  <div class="cards">
+
+    <div class="card">
+      <div class="card-tag">Member Rate</div>
+      <h3>ADE Members</h3>
+      <div class="price">₹625</div>
+      <div class="price-note">per delegate</div>
+      <a href="https://www.onference.in/c/adecon-2026-member/6794" target="_blank">Register</a>
+    </div>
+
+    <div class="card">
+      <div class="card-tag">Non-Member Rate</div>
+      <h3>Non-member</h3>
+      <div class="price">₹990</div>
+      <div class="price-note">per delegate</div>
+      <a href="https://www.onference.in/c/adecon-2026-non-member/6795" target="_blank">Register</a>
+    </div>
+
+  </div>
+
 </div>
 
-<h2 style="color:#1a2e6e;margin:30px 0;">Register Now</h2>
-
-<div class="cards">
-
-<div class="card">
-<h3>ADE Members</h3>
-<div class="note"></div>
-<div class="price">Rs. 625</div>
-<a href="https://www.onference.in/c/adecon-2026-member/6794" target="_blank">Register</a>
+<!-- FOOTER IMAGE (transparent PNG on navy background) -->
+<div class="footer-img-wrap">
+  <img class="footer"
+       src="https://s3.ap-south-1.amazonaws.com/cdn2.onference.in/testepisodethumbnail/ADECON_Registration_Banner_Footer-removebg-preview.png"
+       alt="ADECON Footer">
 </div>
-
-<div class="card">
-<h3>Non-member</h3>
-<div class="note"></div>
-<div class="price">Rs. 990</div>
-<a href="https://www.onference.in/c/adecon-2026-non-member/6795" target="_blank">Register</a>
-</div>
-
-
-
-</div>
-
-</div>
-
-<img class="footer"
-src="https://s3.ap-south-1.amazonaws.com/cdn2.onference.in/testepisodethumbnail/ADECON+Registration+Banner+Footer.png">
 
 </body>
 </html>
